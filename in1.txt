@@ -1,20 +1,10 @@
 
-
 public class Book {
+    
     private Integer id;
     public String title;
     protected String author;
-    protected String type;
 
-    public Book() {
-    }
-
-    public Book(Integer id1, String title1, String author1, String type1) {
-        id = id1;
-        title = title1;
-        author = author1;
-        type = type1;
-    }
 
     public Integer getId() {
         return id;

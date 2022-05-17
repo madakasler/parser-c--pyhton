@@ -3,51 +3,52 @@ using java.util.ArrayList;
 using java.util.List;
 namespace Bussines.Contracts;
 public class MainClass {
-    private static Float max(Float a, Float b){
-        if (a > b) {
-            return a;
-        } else {
+    private static Float min(Float a, Float b) throws NullPointerException{
+        if (a < b) {
             return b;
+        } else {
+            return a;
+           
         }
     }
 
-    public static Integer getMax() {
-        List list = new ArrayList();
-        list.add(20);
-        list.add(5);
-        list.add(10);
-        list.add(2);
+    public static Integer getAvg() {
+        List listForNumbers = new ArrayList();
+        listForNumbers.add(32);
+        listForNumbers.add(5);
+        listForNumbers.add(110);
+        listForNumbers.add(22);
         Integer i = 0;
-        Integer max = 0;
+        Integer min = 0;
         for(i = 0; i < 4; i++) {
-            if (max < list.at(i)) {
-                max = list.at(i);
+            if (min < listForNumbers.at(i)) {
+                min = listForNumbers.at(i);
             }
         }
-        return max;
+        return min;
     }
 
     public static void printList() {
-        List list = new ArrayList();
-        list.add(20);
-        list.add(5);
-        list.add(10);
-        list.add(2);
+        List listForNumbers = new ArrayList();
+        listForNumbers.add(20);
+        listForNumbers.add(5);
+        listForNumbers.add(10);
+        listForNumbers.add(2);
         Integer i = 0;
         while (i < 4) {
-            System.out.print(list.at(i) + " ");
+            System.out.print(listForNumbers.at(i) + " ");
             i = i + 1;
         }
     }
 
     public static void main(String[] args) throws Exception{
-        Float a = 45;
-        Float b = 56;
-        System.out.print("maximul este: " + max(a, b));
+        Float x = 45;
+        Float y = 56;
+        System.out.print("minimul este: " + getAvg(x, y));
         Double c = 0;
-        c = a + b;
+        c = x + y;
         System.out.print("suma este: " + c);
-        Integer max = getMax();
+        Integer max = getAvg();
         printList();
 
 

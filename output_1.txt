@@ -1,0 +1,30 @@
+class Book:
+        id: int
+    title: str
+    author: str
+    def getId( ):
+        return id
+    
+    def setId(id1: int ):
+        id = id1
+    
+    def getTitle( ):
+        return title
+    
+    def setTitle(title1: str ):
+        title = title1
+    
+    def getAuthor( ):
+        return author
+    
+    def setAuthor(author: str ):
+        author = author
+    
+    def getType( ):
+        return type
+    
+    def setType(type1: str ):
+        type = type1
+    
+    def main() :
+	

@@ -74,7 +74,8 @@ extern int yydebug;
     FUNCTIE = 280,
     FUNCTIE2 = 281,
     ASIG = 282,
-    RETURNT = 283
+    RETURNT = 283,
+    GETSET = 284
   };
 #endif
 /* Tokens.  */
@@ -104,6 +105,7 @@ extern int yydebug;
 #define FUNCTIE2 281
 #define ASIG 282
 #define RETURNT 283
+#define GETSET 284
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
