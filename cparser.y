@@ -69,9 +69,7 @@
 			| ASIG {printf("\n");} 
 			| TIP_PRIMITIV EOL {printf("\n");}
 			| RETURNT EOL {printf("\n");}
-			| EXCEPTIET EOL {printf("\n");}
 			| AFISARE EOL {printf("\n");}
-			| TRY {printf("\n");}
 			| FUNCTIE {printf("\n");} 
 			| init_variabile EOL {;}
 			| verificare_constructor {;}
