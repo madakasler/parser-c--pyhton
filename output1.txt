@@ -1,0 +1,39 @@
+class Book:
+    id: int
+    title: str
+    author: str
+    type: str
+    def __init__(self):
+     
+    def __init__(self, id1: int,  title1: str,  author1: str,  type1: str):
+         id = id1
+        title = title1
+        author = author1
+        type = type1
+    
+    def getId( ):
+        return id
+    
+    def setId(id1: int ):
+        id = id1
+    
+    def getTitle( ):
+        return title
+    
+    def setTitle(title1: str ):
+        title = title1
+    
+    def getAuthor( ):
+        return author
+    
+    def setAuthor(author: str ):
+        author = author
+    
+    def getType( ):
+        return type
+    
+    def setType(type1: str ):
+        type = type1
+    
+    def main() :
+	

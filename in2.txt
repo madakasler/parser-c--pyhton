@@ -1,0 +1,17 @@
+package model;
+
+public class MainClass {
+    public static void print(String text) throws Exception{
+        System.out.print(text);
+        throw new Exception();
+    }
+
+    public static void main(String[] args) throws Exception{
+        try {
+            System.out.print("exemplu cu exceptie");
+        } catch (Exception e) {
+            System.out.print("am prins exceptia");
+            throw new Exception();
+        }
+	}
+}

@@ -1,0 +1,54 @@
+package model;
+
+public class Book {
+    private Integer id;
+    public String title;
+    protected String author;
+    protected String type;
+
+    public Book() {
+    }
+
+    public Book(Integer id1, String title1, String author1, String type1) {
+        id = id1;
+        title = title1;
+        author = author1;
+        type = type1;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id1) {
+        id = id1;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title1) {
+        title = title1;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        author = author;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type1) {
+        type = type1;
+    }
+
+    public static void main(String[] args){
+
+	}
+}

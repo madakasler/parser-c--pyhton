@@ -1,0 +1,42 @@
+using java.util.ArrayList
+using java.util.List
+class MainClass:
+    def max(a: float,  b: float):
+        if (a > b):
+             return a
+         else:
+             return b
+            
+    def getMax( ):
+        list = ArrayList()
+        list.add(20)
+        list.add(5)
+        list.add(10)
+        list.add(2)
+        i = 0
+        max = 0
+        for i in range(0, 4):
+             if (max < list.at(i)):
+                 max = list.at(i)
+                            return max
+    
+    def printList( ):
+        list = ArrayList()
+        list.add(20)
+        list.add(5)
+        list.add(10)
+        list.add(2)
+        i = 0
+        while i < 4:             print(list.at(i) + " ")
+            i = i + 1
+            
+    def main() :
+        a = 45
+        b = 56
+        print("maximul este: " + max(a, b))
+        c = 0
+        c = a + b
+        print("suma este: " + c)
+        max = getMax()
+        printList()
+	

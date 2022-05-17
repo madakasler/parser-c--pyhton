@@ -1,0 +1,12 @@
+class MainClass:
+    def print(text: str):
+        print(text)
+        raise Exception()
+    
+    def main() :
+        try:
+            print("exemplu cu exceptie")
+        except Exception:
+            print("am prins exceptia")
+            raise Exception()
+        	

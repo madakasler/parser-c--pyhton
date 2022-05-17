@@ -1,0 +1,55 @@
+
+using java.util.ArrayList;
+using java.util.List;
+namespace Bussines.Contracts;
+public class MainClass {
+    private static Float max(Float a, Float b){
+        if (a > b) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+
+    public static Integer getMax() {
+        List list = new ArrayList();
+        list.add(20);
+        list.add(5);
+        list.add(10);
+        list.add(2);
+        Integer i = 0;
+        Integer max = 0;
+        for(i = 0; i < 4; i++) {
+            if (max < list.at(i)) {
+                max = list.at(i);
+            }
+        }
+        return max;
+    }
+
+    public static void printList() {
+        List list = new ArrayList();
+        list.add(20);
+        list.add(5);
+        list.add(10);
+        list.add(2);
+        Integer i = 0;
+        while (i < 4) {
+            System.out.print(list.at(i) + " ");
+            i = i + 1;
+        }
+    }
+
+    public static void main(String[] args) throws Exception{
+        Float a = 45;
+        Float b = 56;
+        System.out.print("maximul este: " + max(a, b));
+        Double c = 0;
+        c = a + b;
+        System.out.print("suma este: " + c);
+        Integer max = getMax();
+        printList();
+
+
+	}
+}
