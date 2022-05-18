@@ -1,10 +1,10 @@
 
-public class Book {
+public class Movie {
     
     private Integer id;
     public String title;
-    protected String author;
-
+    protected String director;
+    protected String distribution;
 
     public Integer getId() {
         return id;
@@ -18,24 +18,24 @@ public class Book {
         return title;
     }
 
-    public void setTitle(String title1) {
-        title = title1;
+    public void setTitle(String title) {
+        title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getDirector() {
+        return director;
     }
 
-    public void setAuthor(String author) {
-        author = author;
+    public void setDirector(String director) {
+        director = director;
     }
 
-    public String getType() {
+    public String getDistribution() {
         return type;
     }
 
-    public void setType(String type1) {
-        type = type1;
+    public void setDistribution(String distribution) {
+        distribution = distribution;
     }
 
     public static void main(String[] args){

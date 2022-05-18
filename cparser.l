@@ -25,21 +25,21 @@ STATIC "static"
 MAIN "public static void main(String[] args)"
 MAINTHROWS "public static void main(String[] args) throws"[ A-Za-z_,]+
 VOID "void"[ A-Za-z_0-9]+
-STRING "String"[ A-Za-z_0-9]+
-INTEGER "Integer"[ A-Za-z_0-9]+
-FLOAT "Float"[ A-Za-z_0-9]+
+STRINGTYPE "String"[ A-Za-z_0-9]+
+INTEGERTYPE "Integer"[ A-Za-z_0-9]+
+FLOATTYPE "Float"[ A-Za-z_0-9]+
 GETSET "{ get; set; }"
-DOUBLE "Double"[ A-Za-z_0-9]+
-BOOLEAN "Boolean"[ A-Za-z_0-9]+
-STRINGE "String"[ A-Za-z_="]+{NUMBER}
-INTEGERE "Integer"[ A-Za-z_=]+{NUMBER}
-FLOATE "Float"[ A-Za-z_=]+{float}
-DOUBLEE "Double"[ A-Za-z_=]+{float}
-BOOLEANE "Boolean"[ A-Za-z_=]+{NUMBER}
-FUNC [A-Za-z_]+"."[A-Za-z_]+"()"
-FUNC2 [A-Za-z_]+"."[A-Za-z_]+"("[ 0-9A-Za-z_,]+")"
-FUNC3 [A-Za-z_]+"()"
-FUNC4 [A-Za-z_]+"("[ 0-9A-Za-z_,]+")"
+DOUBLETYPE "Double"[ A-Za-z_0-9]+
+BOOLEANTYPE "Boolean"[ A-Za-z_0-9]+
+STRINGVALUE "String"[ A-Za-z_="]+{NUMBER}
+INTEGERNUMBER "Integer"[ A-Za-z_=]+{NUMBER}
+FLOATNUMBER "Float"[ A-Za-z_=]+{float}
+DOUBLENUMBER "Double"[ A-Za-z_=]+{float}
+BOOLEANNUMBER "Boolean"[ A-Za-z_=]+{NUMBER}
+FUNCWITHOUTPARAM [A-Za-z_]+"."[A-Za-z_]+"()"
+FUNCWITHPARAM [A-Za-z_]+"."[A-Za-z_]+"("[ 0-9A-Za-z_,]+")"
+STATICFUNCWITHOUTPARAM [A-Za-z_]+"()"
+STATICFUNCWITHPARAM [A-Za-z_]+"("[ 0-9A-Za-z_,]+")"
 INSTANCE [ 0-9A-Za-z_]+"="[ 0-9A-Za-z_()+."]+[;]
 IF "if ("[A-Za-z_> <=!.()]+
 WHILE "while ("[A-Za-z_> <=!.0-9]+")"
@@ -140,7 +140,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   contor++;
               }
 			return TIP_PRIMITIV;}
-{STRING} {  /*Verifica daca este o variabila definita ca si String */
+{STRINGTYPE} {  /*Verifica daca este o variabila definita ca si String */
             int contor = 7;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -148,7 +148,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
             printf(": str");
 			return TIP_PRIMITIV;}
-{INTEGER} { /*Verifica daca este o variabila definita ca si Integer */
+{INTEGERTYPE} { /*Verifica daca este o variabila definita ca si Integer */
             int contor = 8;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -156,7 +156,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
             printf(": int");
 			return TIP_PRIMITIV;}
-{FLOAT} {   /*Verifica daca este o variabila definita ca si Float */
+{FLOATTYPE} {   /*Verifica daca este o variabila definita ca si Float */
             int contor = 6;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -164,7 +164,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
             printf(": float");
 			return TIP_PRIMITIV;}
-{DOUBLE} {  /*Verifica daca este o variabila definita ca si Double */
+{DOUBLETYPE} {  /*Verifica daca este o variabila definita ca si Double */
             int contor = 7;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -172,7 +172,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
             printf(": float");
 			return TIP_PRIMITIV;}		
-{BOOLEAN} { 
+{BOOLEANTYPE} { 
             /*Verifica daca este o variabila definita ca si Boolean */
             int contor = 8;
             while (contor < strlen(yytext)) {
@@ -182,35 +182,35 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
             printf(": bool");
 			return TIP_PRIMITIV;}
 
-{STRINGE} { /*Verifica daca este o variabila definita ca si String care este initializata la o valoare*/
+{STRINGVALUE} { /*Verifica daca este o variabila definita ca si String care este initializata la o valoare*/
             int contor = 7;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
                   contor++;
               }
 			return TIP_PRIMITIV;}
-{INTEGERE} {/*Verifica daca este o variabila definita ca si Integer care este initializata la o valoare*/ 
+{INTEGERNUMBER} {/*Verifica daca este o variabila definita ca si Integer care este initializata la o valoare*/ 
             int contor = 8;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
                   contor++;
               }
 			return TIP_PRIMITIV;}
-{FLOATE} {  /*Verifica daca este o variabila definita ca si Float care este initializata la o valoare*/ 
+{FLOATNUMBER} {  /*Verifica daca este o variabila definita ca si Float care este initializata la o valoare*/ 
             int contor = 6;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
                   contor++;
               }
 			return TIP_PRIMITIV;}
-{DOUBLEE} { /*Verifica daca este o variabila definita ca si Double care este initializata la o valoare*/ 
+{DOUBLENUMBER} { /*Verifica daca este o variabila definita ca si Double care este initializata la o valoare*/ 
             int contor = 7;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
                   contor++;
               }
 			return TIP_PRIMITIV;}		
-{BOOLEANE} {/*Verifica daca este o variabila definita ca si Boolean care este initializata la o valoare*/ 
+{BOOLEANNUMBER} {/*Verifica daca este o variabila definita ca si Boolean care este initializata la o valoare*/ 
             int contor = 8;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -218,7 +218,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
 			return TIP_PRIMITIV;}			
 	
-{STRING}\( {/*Verifica daca este o metoda care va intoarce un String */ 
+{STRINGTYPE}\( {/*Verifica daca este o metoda care va intoarce un String */ 
             int contor = 7;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -227,7 +227,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
 			
 			return TIP_PRIMITIV;}
-{INTEGER}\( {/*Verifica daca este o metoda care va intoarce un Integer */  
+{INTEGERTYPE}\( {/*Verifica daca este o metoda care va intoarce un Integer */  
             int contor = 8;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -235,7 +235,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   contor++;
               }
 			return TIP_PRIMITIV;}
-{FLOAT}\( { /*Verifica daca este o metoda care va intoarce un Float */   
+{FLOATTYPE}\( { /*Verifica daca este o metoda care va intoarce un Float */   
             int contor = 6;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -243,7 +243,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   contor++;
               }
 			return TIP_PRIMITIV;}
-{DOUBLE}\( {/*Verifica daca este o metoda care va intoarce un Double */   
+{DOUBLETYPE}\( {/*Verifica daca este o metoda care va intoarce un Double */   
             int contor = 7;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -251,7 +251,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   contor++;
               }
 			return TIP_PRIMITIV;}		
-{BOOLEAN}\( {/*Verifica daca este o metoda care va intoarce un Boolean */  
+{BOOLEANTYPE}\( {/*Verifica daca este o metoda care va intoarce un Boolean */  
             int contor = 8;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -351,7 +351,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 
 
 
-{FUNC}\; {  /*Verifica daca se invoca o metoda fara parametrii de catre o instanta*/
+{FUNCWITHOUTPARAM}\; {  /*Verifica daca se invoca o metoda fara parametrii de catre o instanta*/
 			int contor = 0;
             while (contor < strlen(yytext) - 1) {
                   printf("%c", yytext[contor]);
@@ -361,7 +361,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 			return FUNCTIE;		
 		}
 
-{FUNC2}\; { /*Verifica daca se invoca o metoda cu parametrii de catre o instanta*/
+{FUNCWITHPARAM}\; { /*Verifica daca se invoca o metoda cu parametrii de catre o instanta*/
 			int contor = 0;
             while (contor < strlen(yytext) - 1) {
                   printf("%c", yytext[contor]);
@@ -370,7 +370,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 			return FUNCTIE;
 		}
 
-{FUNC3}\; { /*Verifica daca se invoca o metoda statica fara parametrii*/
+{STATICFUNCWITHOUTPARAM}\; { /*Verifica daca se invoca o metoda statica fara parametrii*/
 			int contor = 0;
             while (contor < strlen(yytext) - 1) {
                   printf("%c", yytext[contor]);
@@ -379,7 +379,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 			return FUNCTIE;		
 		}
 
-{FUNC4}\; { /*Verifica daca se invoca o metoda statica cu parametrii*/
+{STATICFUNCWITHPARAM}\; { /*Verifica daca se invoca o metoda statica cu parametrii*/
 			int contor = 0;
             while (contor < strlen(yytext) - 1) {
                   printf("%c", yytext[contor]);

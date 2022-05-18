@@ -1,8 +1,9 @@
-class Book:
+class Movie:
         id: int
     title: str
-    author: str
-    def getId( ):
+    director: str
+    distribution: str
+    def getId( ):
         return id
     
     def setId(id1: int ):
@@ -11,20 +12,20 @@
     def getTitle( ):
         return title
     
-    def setTitle(title1: str ):
-        title = title1
+    def setTitle(title: str ):
+        title = title
     
-    def getAuthor( ):
-        return author
+    def getDirector( ):
+        return director
     
-    def setAuthor(author: str ):
-        author = author
+    def setDirector(director: str ):
+        director = director
     
-    def getType( ):
+    def getDistribution( ):
         return type
     
-    def setType(type1: str ):
-        type = type1
+    def setDistribution(distribution: str ):
+        distribution = distribution
     
     def main() :
 	
