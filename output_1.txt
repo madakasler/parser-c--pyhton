@@ -1,31 +1,5 @@
-class Movie:
-        id: int
-    title: str
-    director: str
-    distribution: str
-    def getId( ):
-        return id
-    
-    def setId(id1: int ):
-        id = id1
-    
-    def getTitle( ):
-        return title
-    
-    def setTitle(title: str ):
-        title = title
-    
-    def getDirector( ):
-        return director
-    
-    def setDirector(director: str ):
-        director = director
-    
-    def getDistribution( ):
-        return type
-    
-    def setDistribution(distribution: str ):
-        distribution = distribution
-    
-    def main() :
-	
+using java.util.ArrayList
+using java.util.List
+class IRepository:
+    getAvg: int
+    

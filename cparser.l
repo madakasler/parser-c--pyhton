@@ -15,7 +15,6 @@ float [+-]?[0-9]+(\.)[0-9]+
 
 USING "using"[ A-Za-z_.]+
 CLASS "class"[ A-Za-z_]+
-INTERFACE "interface"[ A-Za-z_]+
 RETURN "return "[ 0-9A-Za-z_]+
 NAMESPACE "namespace"[ A-Za-z_.]+
 PUBLIC "public"
@@ -71,17 +70,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 			strcpy(className, yytext + 6);
 			return CLASA; }
 
-{INTERFACE} { /*Returneaza token-ul pentru liniile de cod in care se face match cu regex-ul de declarare a antetului unei interfete
-                Se va returna si in acest caz token-ul CLASA, deoarece in Python nu exista interfete, doar clase*/
-              int contor = 9;
-              printf("class");
-              while (contor < strlen(yytext) - 1) {
-                  printf("%c", yytext[contor]);
-                  contor++;
-              }
-              printf(":\n");
-			  return CLASA;
-            }
+
 
 {PUBLIC}" " {
                 /*Cand intalneste modificatorii de acces ii ignora si verifica ce este in continuare*/
