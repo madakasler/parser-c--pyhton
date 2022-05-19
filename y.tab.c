@@ -576,11 +576,11 @@ static const char *const yytname[] =
   "RETURNEAZA", "FUNCTIE_PRINCIPALA", "EOL", "COMPARATORI", "NAMESPACE",
   "CLASA", "CONSTRUCTOR", "CONSTRUCTOR2", "EXCEPTIE", "AFISARE",
   "ASIGNARE", "FUNCTIE", "FUNCTIE2", "ASIG", "RETURNT", "'('", "')'",
-  "','", "'{'", "'}'", "$accept", "check_includere", "$@1",
-  "check_namespace", "$@2", "check_clasa", "$@3", "check_constructor",
-  "$@4", "$@5", "check_functie", "$@6", "$@7", "$@8", "$@9", "lista_param",
-  "$@10", "check_main", "$@11", "initialize_variabile", "check_operations",
-  "$@14", "$@15", "$@16", "$@17", "check_body", "$@18", "$@19",
+  "','", "'{'", "'}'", "$accept", "check_using", "$@1", "check_namespace",
+  "$@2", "check_class", "$@3", "check_constructor", "$@4", "$@5",
+  "check_functie", "$@6", "$@7", "$@8", "$@9", "lista_param", "$@10",
+  "check_main", "$@11", "initialize_variabile", "check_operations", "$@14",
+  "$@15", "$@16", "$@17", "check_body", "$@18", "$@19",
   "check_body_constructor", "$@20", "$@21", "check_body_operations",
   "$@22", "$@23", "check_body_main", "$@24", "$@25", YY_NULLPTR
 };
@@ -1484,7 +1484,7 @@ yyreduce:
     {
   case 3:
 #line 18 "cparser.y"
-                                     {;}
+                                 {;}
 #line 1489 "y.tab.c"
     break;
 

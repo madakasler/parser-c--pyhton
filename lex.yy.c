@@ -1251,10 +1251,10 @@ YY_RULE_SETUP
 #line 63 "cparser.l"
 {	/*Returnarea token-ului pentru liniile in care se face match cu regex-ul de declarare a antetului unei clase*/
             /*Se printeaza toata linia, mai putin "{", care va fi inlocuita de ":", caracteristica specifica sintaxei Python*/
-            int index = 0;
-            while (index < strlen(yytext) - 1) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 0;
+            while (contor < strlen(yytext) - 1) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
             printf(":\n");
 
@@ -1287,10 +1287,10 @@ case 8:
 YY_RULE_SETUP
 #line 83 "cparser.l"
 { /*Cand se face match cu regex-ul pentru "return" in cadrul unei metode se va transmite token-ul corespunzator si se va printa linia de cod care returneaza rezultatul metodei respective*/
-			int index = 0;
-			while(index < strlen(yytext)){
-				printf("%c", yytext[index]);
-				index++;
+			int contor = 0;
+			while(contor < strlen(yytext)){
+				printf("%c", yytext[contor]);
+				contor++;
 			}
 			return RETURNT;
 		}
@@ -1301,28 +1301,28 @@ YY_RULE_SETUP
 { 	/*Cand se face match cu regex-ul de instanta a unui obiect se va afisa in fisierul de iesire doar numele noului obiect creat si numle clasei urmat de doua paranteze si se returneaza token-ul corespunzator*/
                 int rez = checkTwoWords(yytext);
               if (rez == 1) {
-                int index = 0;
-                while (yytext[index] == ' ')
-                  printf("%c", yytext[index++]);
-                while (yytext[index] != ' ')
-                  index++;
-                index++;
-                while(yytext[index] != '=') 
-                  printf("%c", yytext[index++]);
+                int contor = 0;
+                while (yytext[contor] == ' ')
+                  printf("%c", yytext[contor++]);
+                while (yytext[contor] != ' ')
+                  contor++;
+                contor++;
+                while(yytext[contor] != '=') 
+                  printf("%c", yytext[contor++]);
                 
                 printf("= ");
-                index += 2;
+                contor += 2;
 
-                if (yytext[index] == 'n' && yytext[index + 1] == 'e' && yytext[index + 2] == 'w')
-                  index += 4;
+                if (yytext[contor] == 'n' && yytext[contor + 1] == 'e' && yytext[contor + 2] == 'w')
+                  contor += 4;
 
-                while (index < strlen(yytext) - 1)
-                  printf("%c", yytext[index++]);
+                while (contor < strlen(yytext) - 1)
+                  printf("%c", yytext[contor++]);
               } else {
-				  	int index = 0;
-					while(index < strlen(yytext) - 1){
-						printf("%c", yytext[index]);
-						index++;
+				  	int contor = 0;
+					while(contor < strlen(yytext) - 1){
+						printf("%c", yytext[contor]);
+						contor++;
 					}
 			  }
 			  return ASIG;
@@ -1332,11 +1332,11 @@ case 10:
 YY_RULE_SETUP
 #line 121 "cparser.l"
 {  /*Verifica daca este o metoda definita ca si void */
-            int index = 5;
+            int contor = 5;
 			printf("def ");	
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
 	YY_BREAK
@@ -1344,10 +1344,10 @@ case 11:
 YY_RULE_SETUP
 #line 129 "cparser.l"
 {  /*Verifica daca este o variabila definita ca si String */
-            int index = 7;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 7;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
             printf(": str");
 			return PRIMITIVE_DATA_TYPE;}
@@ -1356,10 +1356,10 @@ case 12:
 YY_RULE_SETUP
 #line 137 "cparser.l"
 { /*Verifica daca este o variabila definita ca si Integer */
-            int index = 8;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 8;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
             printf(": int");
 			return PRIMITIVE_DATA_TYPE;}
@@ -1368,10 +1368,10 @@ case 13:
 YY_RULE_SETUP
 #line 145 "cparser.l"
 {   /*Verifica daca este o variabila definita ca si Float */
-            int index = 6;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 6;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
             printf(": float");
 			return PRIMITIVE_DATA_TYPE;}
@@ -1380,10 +1380,10 @@ case 14:
 YY_RULE_SETUP
 #line 153 "cparser.l"
 {  /*Verifica daca este o variabila definita ca si Double */
-            int index = 7;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 7;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
             printf(": float");
 			return PRIMITIVE_DATA_TYPE;}		
@@ -1393,10 +1393,10 @@ YY_RULE_SETUP
 #line 161 "cparser.l"
 { 
             /*Verifica daca este o variabila definita ca si Boolean */
-            int index = 8;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 8;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
             printf(": bool");
 			return PRIMITIVE_DATA_TYPE;}
@@ -1405,10 +1405,10 @@ case 16:
 YY_RULE_SETUP
 #line 171 "cparser.l"
 { /*Verifica daca este o variabila definita ca si String care este initializata la o valoare*/
-            int index = 7;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 7;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
 	YY_BREAK
@@ -1416,10 +1416,10 @@ case 17:
 YY_RULE_SETUP
 #line 178 "cparser.l"
 {/*Verifica daca este o variabila definita ca si Integer care este initializata la o valoare*/ 
-            int index = 8;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 8;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
 	YY_BREAK
@@ -1427,10 +1427,10 @@ case 18:
 YY_RULE_SETUP
 #line 185 "cparser.l"
 {  /*Verifica daca este o variabila definita ca si Float care este initializata la o valoare*/ 
-            int index = 6;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 6;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
 	YY_BREAK
@@ -1438,10 +1438,10 @@ case 19:
 YY_RULE_SETUP
 #line 192 "cparser.l"
 { /*Verifica daca este o variabila definita ca si Double care este initializata la o valoare*/ 
-            int index = 7;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 7;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}		
 	YY_BREAK
@@ -1449,10 +1449,10 @@ case 20:
 YY_RULE_SETUP
 #line 199 "cparser.l"
 {/*Verifica daca este o variabila definita ca si Boolean care este initializata la o valoare*/ 
-            int index = 8;
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            int contor = 8;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}			
 	YY_BREAK
@@ -1460,11 +1460,11 @@ case 21:
 YY_RULE_SETUP
 #line 207 "cparser.l"
 {/*Verifica daca este o metoda care va intoarce un String */ 
-            int index = 7;
+            int contor = 7;
 			printf("def ");
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			
 			return PRIMITIVE_DATA_TYPE;}
@@ -1473,11 +1473,11 @@ case 22:
 YY_RULE_SETUP
 #line 216 "cparser.l"
 {/*Verifica daca este o metoda care va intoarce un Integer */  
-            int index = 8;
+            int contor = 8;
 			printf("def ");
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
 	YY_BREAK
@@ -1485,11 +1485,11 @@ case 23:
 YY_RULE_SETUP
 #line 224 "cparser.l"
 { /*Verifica daca este o metoda care va intoarce un Float */   
-            int index = 6;
+            int contor = 6;
 			printf("def ");
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
 	YY_BREAK
@@ -1497,11 +1497,11 @@ case 24:
 YY_RULE_SETUP
 #line 232 "cparser.l"
 {/*Verifica daca este o metoda care va intoarce un Double */   
-            int index = 7;
+            int contor = 7;
 			printf("def ");
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}		
 	YY_BREAK
@@ -1509,11 +1509,11 @@ case 25:
 YY_RULE_SETUP
 #line 240 "cparser.l"
 {/*Verifica daca este o metoda care va intoarce un Boolean */  
-            int index = 8;
+            int contor = 8;
 			printf("def ");
-            while (index < strlen(yytext)) {
-                  printf("%c", yytext[index]);
-                  index++;
+            while (contor < strlen(yytext)) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}	
 	YY_BREAK
@@ -1566,10 +1566,10 @@ YY_RULE_SETUP
 { /*Cand se face match cu regex-ul de printare corespunzatror modului de apelare a metodei corespunzatoare din limbajul java, se va scrie in fisierul de iesire numele metodei corespunzatoare din Python (print)
   urmat de aceeasi parametrii pe care ii primeste si metoda din limbajul Java*/
             printf("print(");
-		  int index = 17;
-			while(index < strlen(yytext)) {
-				printf("%c", yytext[index]);
-                index++;
+		  int contor = 17;
+			while(contor < strlen(yytext)) {
+				printf("%c", yytext[contor]);
+                contor++;
 			}
 			return AFISARE;
 		}
@@ -1578,17 +1578,17 @@ case 34:
 YY_RULE_SETUP
 #line 285 "cparser.l"
 {	/*Verifica daca este o instructiune de tip while*/
-            int index = 0;
-			while ( yytext[index] != '(') {
-				printf("%c", yytext[index]);
-				index++;
+            int contor = 0;
+			while ( yytext[contor] != '(') {
+				printf("%c", yytext[contor]);
+				contor++;
 			}
-			index++;
-			while ( yytext[index] != ')') {
-				printf("%c", yytext[index]);
-				index++;
+			contor++;
+			while ( yytext[contor] != ')') {
+				printf("%c", yytext[contor]);
+				contor++;
 			}
-			index++;
+			contor++;
 			return CAT_TIMP;
 		}
 	YY_BREAK
@@ -1604,29 +1604,29 @@ YY_RULE_SETUP
 #line 305 "cparser.l"
 { /*Verifica daca este o intructiune for*/
 		printf("for ");
-		int index = 4;
-		while (yytext[index] != ' ') {
-			printf("%c", yytext[index]);
-            index++;
+		int contor = 4;
+		while (yytext[contor] != ' ') {
+			printf("%c", yytext[contor]);
+            contor++;
 		}
-		index+=3;
+		contor+=3;
 		printf(" in range(");
-		while (yytext[index + 1] != ' ') {
-			printf("%c", yytext[index]);
-            index++;
+		while (yytext[contor + 1] != ' ') {
+			printf("%c", yytext[contor]);
+            contor++;
 		}
 		printf(", ");
- 		index++;
-		while (yytext[index] != '<' && yytext[index] != '>') {
-            index++;
+ 		contor++;
+		while (yytext[contor] != '<' && yytext[contor] != '>') {
+            contor++;
 		}
-		index++;
-		if (yytext[index] == '=')
-			index++;
-		index++;
-		while (yytext[index + 1] != ' ') {
-			printf("%c", yytext[index]);
-            index++;
+		contor++;
+		if (yytext[contor] == '=')
+			contor++;
+		contor++;
+		while (yytext[contor + 1] != ' ') {
+			printf("%c", yytext[contor]);
+            contor++;
 		}
 		printf(")");
 		return PENTRU;}
@@ -1665,10 +1665,10 @@ case 41:
 YY_RULE_SETUP
 #line 351 "cparser.l"
 {  /*Verifica daca se invoca o metoda fara parametrii de catre o instanta*/
-			int index = 0;
-            while (index < strlen(yytext) - 1) {
-                  printf("%c", yytext[index]);
-                  index++;
+			int contor = 0;
+            while (contor < strlen(yytext) - 1) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			
 			return FUNCTIE;		
@@ -1678,10 +1678,10 @@ case 42:
 YY_RULE_SETUP
 #line 361 "cparser.l"
 { /*Verifica daca se invoca o metoda cu parametrii de catre o instanta*/
-			int index = 0;
-            while (index < strlen(yytext) - 1) {
-                  printf("%c", yytext[index]);
-                  index++;
+			int contor = 0;
+            while (contor < strlen(yytext) - 1) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return FUNCTIE;
 		}
@@ -1690,10 +1690,10 @@ case 43:
 YY_RULE_SETUP
 #line 370 "cparser.l"
 { /*Verifica daca se invoca o metoda statica fara parametrii*/
-			int index = 0;
-            while (index < strlen(yytext) - 1) {
-                  printf("%c", yytext[index]);
-                  index++;
+			int contor = 0;
+            while (contor < strlen(yytext) - 1) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return FUNCTIE;		
 		}
@@ -1702,10 +1702,10 @@ case 44:
 YY_RULE_SETUP
 #line 379 "cparser.l"
 { /*Verifica daca se invoca o metoda statica cu parametrii*/
-			int index = 0;
-            while (index < strlen(yytext) - 1) {
-                  printf("%c", yytext[index]);
-                  index++;
+			int contor = 0;
+            while (contor < strlen(yytext) - 1) {
+                  printf("%c", yytext[contor]);
+                  contor++;
               }
 			return FUNCTIE;
 		}
@@ -2742,16 +2742,16 @@ void yyfree (void * ptr )
 
 /*Aceasta functie verifica daca exista doua cuvinte inainte si dupa egal*/
 int checkTwoWords(char *s){
-    int index = 0;
+    int contor = 0;
     int word = 0;
-    while (s[index] == ' ')
-      index++;
-    while (s[index] != '=') {
-        while (s[index] != ' ' && s[index] != '=') {
-            index++;
+    while (s[contor] == ' ')
+      contor++;
+    while (s[contor] != '=') {
+        while (s[contor] != ' ' && s[contor] != '=') {
+            contor++;
         }
         word++;
-        index++;
+        contor++;
     }
     if (word == 2)
         return 1;

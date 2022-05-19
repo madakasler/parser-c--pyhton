@@ -15,17 +15,17 @@
 
 %%
 	/*Daca este declarat un pachet, urmat de EOL, adica ";", se urmareste daca in continuare are loc includerea unor biblioteci*/
-	check_includere: | USING EOL {;} check_includere
+	check_using: | USING EOL {;} check_using
 					   | check_namespace ;
 
 	/*Daca este o linie care contine import-ul unei biblioteci, urmat de ";", se continua sa se verifice daca si pe urmatoarea linie exista un import, sau declararea antetului unei clase*/
 	check_namespace: 
 			| NAMESPACE EOL {;} check_namespace
-			| check_clasa check_namespace
+			| check_class check_namespace
 			;
 
 	/*Daca linia curenta contine antetul unei clase, se verifica in continuare daca urmatoarea linie contine un constructor sau declarari de field-uri*/		
-	check_clasa:
+	check_class:
 			| CLASA {;} check_body
 			| check_constructor
 			| initialize_variabile
