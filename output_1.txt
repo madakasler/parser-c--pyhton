@@ -1,5 +1,42 @@
 using java.util.ArrayList
 using java.util.List
-class IRepository:
-    getAvg: int
-    
+class MainClass:
+    def min(a: float,  b: float):
+        if (a < b):
+             return b
+         else:
+             return a
+                       
+    def getAvg( ):
+        listForNumbers = ArrayList()
+        listForNumbers.add(32)
+        listForNumbers.add(5)
+        listForNumbers.add(110)
+        listForNumbers.add(22)
+        i = 0
+        min = 0
+        for i in range(0, 4):
+             if (min < listForNumbers.at(i)):
+                 min = listForNumbers.at(i)
+                            return min
+    
+    def printList( ):
+        listForNumbers = ArrayList()
+        listForNumbers.add(20)
+        listForNumbers.add(5)
+        listForNumbers.add(10)
+        listForNumbers.add(2)
+        i = 0
+        while i < 4:             print(listForNumbers.at(i) + " ")
+            i = i + 1
+            
+    def main() :
+        x = 45
+        y = 56
+        print("minimul este: " + getAvg(x, y))
+        c = 0
+        c = x + y
+        print("suma este: " + c)
+        max = getAvg()
+        printList()
+	

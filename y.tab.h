@@ -50,7 +50,7 @@ extern int yydebug;
   enum yytokentype
   {
     USING = 258,
-    TIP_PRIMITIV = 259,
+    PRIMITIVE_DATA_TYPE = 259,
     VALOARE = 260,
     VALOARE_FLOTANTA = 261,
     DACA = 262,
@@ -66,21 +66,17 @@ extern int yydebug;
     CONSTRUCTOR = 272,
     CONSTRUCTOR2 = 273,
     EXCEPTIE = 274,
-    EXCEPTIET = 275,
-    AFISARE = 276,
-    TRY = 277,
-    CATCH = 278,
-    ASIGNARE = 279,
-    FUNCTIE = 280,
-    FUNCTIE2 = 281,
-    ASIG = 282,
-    RETURNT = 283,
-    GETSET = 284
+    AFISARE = 275,
+    ASIGNARE = 276,
+    FUNCTIE = 277,
+    FUNCTIE2 = 278,
+    ASIG = 279,
+    RETURNT = 280
   };
 #endif
 /* Tokens.  */
 #define USING 258
-#define TIP_PRIMITIV 259
+#define PRIMITIVE_DATA_TYPE 259
 #define VALOARE 260
 #define VALOARE_FLOTANTA 261
 #define DACA 262
@@ -96,16 +92,12 @@ extern int yydebug;
 #define CONSTRUCTOR 272
 #define CONSTRUCTOR2 273
 #define EXCEPTIE 274
-#define EXCEPTIET 275
-#define AFISARE 276
-#define TRY 277
-#define CATCH 278
-#define ASIGNARE 279
-#define FUNCTIE 280
-#define FUNCTIE2 281
-#define ASIG 282
-#define RETURNT 283
-#define GETSET 284
+#define AFISARE 275
+#define ASIGNARE 276
+#define FUNCTIE 277
+#define FUNCTIE2 278
+#define ASIG 279
+#define RETURNT 280
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

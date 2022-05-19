@@ -7,35 +7,82 @@
 	int yylex(void);
 	int yyerror(const char* s);
 	
-	/*Acest contor este folosit pentru a numara parantezele pentru a vedea daca o metoda este scrisa corect*/
+	/*Folosim acest contor pentru a tine cont cand a fost terminat corpul unei clase sau al unei metode*/
 	int counter = 0;
 %}
-/*Se declara tokenii care provin din fisierul lex/
-%token USING TIP_PRIMITIV VALOARE VALOARE_FLOTANTA DACA ALTFEL PENTRU CAT_TIMP RETURNEAZA FUNCTIE_PRINCIPALA EOL COMPARATORI NAMESPACE CLASA EXCEPTIE AFISARE ASIGNARE FUNCTIE FUNCTIE2 ASIG RETURNT GETSET
+/*Declaram tokenii care sunt returnati din fisierul lex*/
+%token  USING PRIMITIVE_DATA_TYPE VALOARE VALOARE_FLOTANTA DACA ALTFEL PENTRU CAT_TIMP RETURNEAZA FUNCTIE_PRINCIPALA EOL COMPARATORI NAMESPACE CLASA CONSTRUCTOR CONSTRUCTOR2 EXCEPTIE AFISARE ASIGNARE FUNCTIE FUNCTIE2 ASIG RETURNT
 
 %%
+	/*Daca este declarat un pachet, urmat de EOL, adica ";", se urmareste daca in continuare are loc includerea unor biblioteci*/
+	check_includere: | USING EOL {;} check_includere
+					   | check_namespace ;
 
+	/*Daca este o linie care contine import-ul unei biblioteci, urmat de ";", se continua sa se verifice daca si pe urmatoarea linie exista un import, sau declararea antetului unei clase*/
+	check_namespace: 
+			| NAMESPACE EOL {;} check_namespace
+			| check_clasa check_namespace
+			;
 
-	/*Aici se face verificarea pentru o asignare sau o declarare a unui atribut,daca se face vreun return, sau daca se apeleaza o functie */
-	initialize_variables:  
+	/*Daca linia curenta contine antetul unei clase, se verifica in continuare daca urmatoarea linie contine un constructor sau declarari de field-uri*/		
+	check_clasa:
+			| CLASA {;} check_body
+			| check_constructor
+			| initialize_variabile
+			;
+
+    /*Daca linia curenta este un constructor se va verifica daca pe linia urmatoare urmeaza o declarare de variabila, */
+	check_constructor:
+			| CONSTRUCTOR {printf("):\n");} check_body_constructor
+			| CONSTRUCTOR2 '(' lista_param ')' {printf("):\n");} check_body_constructor
+			| initialize_variabile
+			| check_functie
+			| check_main
+			| check_constructor
+			;	
+
+	/*Se verifica daca antetul unei metode este de forma: un singur parametru urmat de paranteza care inchide lista de parametrii, o lsta de parametrii si paranteza care marcheaza inchiderea listei de parametrii
+	  sau daca metoda arunca si o exceptie */
+	check_functie:
+			| PRIMITIVE_DATA_TYPE ')' {printf("):\n");} check_body
+			| PRIMITIVE_DATA_TYPE lista_param ')' {printf("):\n");} check_body
+			| PRIMITIVE_DATA_TYPE ')' EXCEPTIE {printf("):\n");} check_body
+			| PRIMITIVE_DATA_TYPE lista_param ')' EXCEPTIE {printf("):\n");} check_body
+			| check_main
+			;
+
+	/*Se verifica daca o variabila este singulara, sau aceasta face parte dintr-o lista(este urmata de o virgula), 
+	iar in acest caz se va atasa o virgula dupa aceasta(in cazul listelor de paraametrii pentru metode si constructori)*/
+	lista_param:
+			| PRIMITIVE_DATA_TYPE {;}
+			| PRIMITIVE_DATA_TYPE',' {printf(", ");} lista_param 
+			;
+
+	/*Se verifica daca incepe metoda principala: main-ul si scrie in fisierul de iesire sintaxa de definire a functiei main in Python si continua pentru linia urmatoare cu checka continutului acestei metode*/
+	check_main: 
+			| FUNCTIE_PRINCIPALA {printf("def main() :");} check_body_main
+			;
+
+	/*Se verifica daca s-a intalnit in cod o asignare sau o initializare/declarare a unei variabile, daca am ajuns la un return, se arunca o exceptie, daca se face o afisare, daca exista un corp de try catch sau 
+	daca este invocata o functie */
+	initialize_variabile:  
 			| ASIG {printf("\n");} 
-			| GETSET {printf("\n");} 
-			| TIP_PRIMITIV EOL {printf("\n");}
+			| PRIMITIVE_DATA_TYPE EOL {printf("\n");}
 			| RETURNT EOL {printf("\n");}
 			| AFISARE EOL {printf("\n");}
 			| FUNCTIE {printf("\n");} 
-			| initialize_variables EOL {;}
+			| initialize_variabile EOL {;}
 			| check_constructor {;}
 			;
 
-	/*Aici se face verificarea pentru o asignare sau o declarare a unui atribut*/			
-	initialize_variables_operations:  
-			| ASIG {printf("\n");} initialize_variables_operations
-			| TIP_PRIMITIV EOL {printf("\n");} initialize_variables_operations
+	/*Se verifica daca s-a intalnit in cod o asignare sau o initializare/declarare a unei variabile*/			
+	initialize_variabile_op:  
+			| ASIG {printf("\n");} initialize_variabile_op
+			| PRIMITIVE_DATA_TYPE EOL {printf("\n");} initialize_variabile_op
 			| check_body_operations
 			;
 
-	/*Aici se face verificarea pentru un block de if else, while si for*/		
+	/*Se verifica daca a fost intalnita o structura speciala: alternativa, repetitiva:for, while sau o structura de tip try-catch*/		
 	check_operations:
 			| DACA {printf("\n");} check_body_operations
 			| ALTFEL {printf("\n");} check_body_operations
@@ -43,70 +90,39 @@
 			| PENTRU {printf(":\n");} check_body_operations
 			;
 
-	/*Aici se verifica daca incepe o clasa sau o metoda sau sfarsitul unei bucati de cod*/		
+	/*Se verifica daca pe linia curenta incepe corpul unei metode/clase, daca au loc structuri alternative sau secventiale, declarari/initializari de variabile sau sfarsitul unui corp de cod*/		
 	check_body:
 			| '{\n' {counter++;} check_body
 			| check_operations check_body
-			| initialize_variables check_body
+			| initialize_variabile check_body
 			| '}\n' {counter--; if(counter == 1) {printf("\n");}} check_functie
 			;
 
+	/*Se verifica corpul unui constructor: "{" - inceputul acestuia, checka operationslor care ar putea face parte din corpul constructorului, initializarea diverselor field-uri ale unei obiect nou creat,
+	  "}" - finalul constructorului*/
+	check_body_constructor:
+			| '{\n' {counter++;} check_body_constructor
+			| check_operations check_body_constructor
+			| initialize_variabile check_body_constructor
+			| '}\n' {counter--; if(counter == 1) {printf("\n");}} check_constructor;
+			;
 
-
-	/* Aici se face verificarea pentru corupul unei metode care incepe cu { si se termina cu } */		
+	/*Se verifica corpul unei metode/structuri: inceputul acesteia marcat de "}", finalul acesteia "{", initializarea/declararea unor variabile sau o stuctura alternativa, repetitiva sau de tip try-catch */		
 	check_body_operations:
 			| '{\n' {counter++;} check_body_operations
-			| initialize_variables check_body_operations
+			| initialize_variabile check_body_operations
 			| check_operations check_body_operations
 			| '}\n' {counter--;} check_operations
 			;	
 
-	/* Se face verificarea pentru metoda main care  incepe cu { si se termina cu }*/
-		check_body_main:
+	/*Se verifica continutul metodei principale "main" si se verifica daca linia curenta este "{", care marcheaza inceputul metodei, o stuctura alternativa, repetitiva sau de tip try-catch, o declarare/initializare 
+	  de variabile sau "}" care marcheaza finalul acestei metode, caz in care se va returna 0 pentru a opri si programul curent, marcand astfel finalul programului*/
+	check_body_main:
 			| '{\n' {counter++; printf("\n");} check_body_main
 			| check_operations check_body_main
-			| initialize_variables check_body_main
-			| '}\n' {counter--; if(counter == 1) {printf("\n"); return 0;}} check_main_function
+			| initialize_variabile check_body_main
+			| '}\n' {counter--; if(counter == 1) {printf("\n"); return 0;}} check_main
 			;		
-
-	/*Daca este declarat un using, urmat ";", adica daca se foloseste o alta clasa sau o librarie*/
-	check_using: | USING EOL {;} check_using
-					   | check_namespace ;
-
-	/*Daca este o linie care contine namespace, adica numele pachetului din care face parte clasa*/
-	check_namespace: 
-			| NAMESPACE EOL {;} check_namespace
-			| check_class check_namespace
-			;
-
-	/*Daca linia curenta contine antetul unei clase, se verifica in continuare daca urmatoarea linie contine un constructor sau declarari de field-uri*/		
-	check_class:
-			| CLASA {;} check_body
-			| check_constructor
-			| initialize_variables
-			;
-
-	
-
-	/* Aici se verifica tiul functiei, daca are parametrii sau nu , daca se arunca vreo exceptie */
-	check_functie:
-			| TIP_PRIMITIV ')' {printf("):\n");} check_body
-			| TIP_PRIMITIV parameters ')' {printf("):\n");} check_body
-			| TIP_PRIMITIV ')' EXCEPTIE {printf("):\n");} check_body
-			| TIP_PRIMITIV parameters ')' EXCEPTIE {printf("):\n");} check_body
-			| check_main_function
-			;
-
-	/* Se verifica un atribut sau o variabila daca este singulara sau nu, iar daca nu inseamna ca e o lista de parametri folosita pt metode*/
-	parameters:
-			| TIP_PRIMITIV {;}
-			| TIP_PRIMITIV',' {printf(", ");} parameters 
-			;
-
-	/*Se verifica daca incepe metoda principala: main-ul si scrie in fisierul de iesire sintaxa de definire a functiei main in Python*/
-	check_main_function: 
-			| FUNCTIE_PRINCIPALA {printf("def main() :");} check_body_main
-			;
 
 %%
 
@@ -117,8 +133,8 @@ int main()
 
 int yyerror(const char* s)
 {
-	/*Se arata linia la care apare eroarea de sintaxa*/
+	/*In cazul in care sitaxa din fisierul de intrare nu este corespunzatoare, atunci se va scrie in fisierul de iesire la ce linie a aparut eroarea*/
 	extern int yylineno;
-	printf("Error at line %d\n", yylineno);
+	printf("Eroare la linia %d\n", yylineno);
 	return 0;
 }
