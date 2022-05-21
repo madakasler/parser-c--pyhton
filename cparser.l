@@ -53,15 +53,15 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 %%
 
 
-{NAMESPACE} { /*Token-ul returnat in cazul in care se face match pe regex-ul pentru declararea pachetului*/
+{NAMESPACE} { /*Token pentru gasirea pachetului din c#*/
             return NAMESPACE;}
 
-{USING} {	/*Returnarea token-ului pentru liniile de cod in care se face match cu regex-ul de importare a unor biblioteci*/
+{USING} {	/*Token pentru a se returna folosirea unei alte clase sau a unei librarii*/
             printf("%s\n", yytext);
 			return USING;}
 
-{CLASS}  {	/*Returnarea token-ului pentru liniile in care se face match cu regex-ul de declarare a antetului unei clase*/
-            /*Se printeaza toata linia, mai putin "{", care va fi inlocuita de ":", caracteristica specifica sintaxei Python*/
+{CLASS}  {	/*Token pentru antetu unei clase*/
+            /*Se va printa toata linia gasita, dar mai putin "{", care va fi inlocuita de ":", acest lucru specific sintaxei Python*/
             int contor = 0;
             while (contor < strlen(yytext) - 1) {
                   printf("%c", yytext[contor]);
@@ -70,17 +70,17 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
             printf(":\n");
 
 			strcpy(className, yytext + 6);
-			return CLASA; }
+			return CLASS; }
 
 {PUBLIC}" " {
-                /*Cand intalneste modificatorii de acces ii ignora si verifica ce este in continuare*/
+                /*Daca se intalnesc modificatori de acces se verifica ce este in continuare*/
             }
 {PRIVATE}" " {}
 {PROTECTED}" " {}
 
-{STATIC}" " { /*Cand intalneste proprietatea de "static" a unui field sau a unei metode o ignora si continua*/ }
+{STATIC}" " { /*Daca se intalneste proprietatea de static la o metoda sau variabila, continua*/ }
 
-{RETURN} { /*Cand se face match cu regex-ul pentru "return" in cadrul unei metode se va transmite token-ul corespunzator si se va printa linia de cod care returneaza rezultatul metodei respective*/
+{RETURN} { /*Daca se intalneste tokenu de return, se scrie linia pe care e*/
 			int contor = 0;
 			while(contor < strlen(yytext)){
 				printf("%c", yytext[contor]);
@@ -88,8 +88,8 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 			}
 			return RETURNT;
 		}
-{INSTANCE} { 	/*Cand se face match cu regex-ul de instanta a unui obiect se va afisa in fisierul de iesire doar numele noului obiect creat si numle clasei urmat de doua paranteze si se returneaza token-ul corespunzator*/
-                int rez = checkTwoWords(yytext);
+{INSTANCE} { 	/*Daca se face match cu regex pentru a instanta un obiect de clasa se va afisa in fisierul de iesire doar numele noului obiect creat si numle clasei*/
+                int rez = checkSpace(yytext);
               if (rez == 1) {
                 int contor = 0;
                 while (yytext[contor] == ' ')
@@ -115,10 +115,10 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 						contor++;
 					}
 			  }
-			  return ASIG;
+			  return ASSIGN;
 			}
 
-{VOID}\( {  /*Verifica daca este o metoda definita ca si void */
+{VOID}\( {  /*Verifica daca aceasta metoda este un void*/
             int contor = 5;
 			printf("def ");	
             while (contor < strlen(yytext)) {
@@ -126,7 +126,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
-{STRINGVALUE} {  /*Verifica daca este o variabila definita ca si String */
+{STRINGVALUE} {  /*Verifica daca este o variabila definita ca si tipul de data String */
             int contor = 7;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -134,7 +134,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
             printf(": str");
 			return PRIMITIVE_DATA_TYPE;}
-{INTEGERVALUE} { /*Verifica daca este o variabila definita ca si Integer */
+{INTEGERVALUE} { /*Verifica daca este o variabila definita ca si tipul de data Integer */
             int contor = 8;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -142,7 +142,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
             printf(": int");
 			return PRIMITIVE_DATA_TYPE;}
-{FLOATVALUE} {   /*Verifica daca este o variabila definita ca si Float */
+{FLOATVALUE} {   /*VVerifica daca este o variabila definita ca si tipul de data Float  */
             int contor = 6;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -150,7 +150,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
             printf(": float");
 			return PRIMITIVE_DATA_TYPE;}
-{DOUBLEVALUE} {  /*Verifica daca este o variabila definita ca si Double */
+{DOUBLEVALUE} {  /*Verifica daca este o variabila definita ca si tipul de data Double */
             int contor = 7;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -159,7 +159,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
             printf(": float");
 			return PRIMITIVE_DATA_TYPE;}		
 {BOOLEANVALUE} { 
-            /*Verifica daca este o variabila definita ca si Boolean */
+            /*Verifica daca este o variabila definita ca si tipul de data Boolean  */
             int contor = 8;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -168,35 +168,35 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
             printf(": bool");
 			return PRIMITIVE_DATA_TYPE;}
 
-{STRINGTYPE} { /*Verifica daca este o variabila definita ca si String care este initializata la o valoare*/
+{STRINGTYPE} { /*Verifica daca se intializeaza o variabila ca si un String*/
             int contor = 7;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
                   contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
-{INTEGERTYPE} {/*Verifica daca este o variabila definita ca si Integer care este initializata la o valoare*/ 
+{INTEGERTYPE} {/*VVerifica daca se intializeaza o variabila ca si un Integer*/ 
             int contor = 8;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
                   contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
-{FLOATTYPE} {  /*Verifica daca este o variabila definita ca si Float care este initializata la o valoare*/ 
+{FLOATTYPE} {  /*Verifica daca se intializeaza o variabila ca si un Float*/ 
             int contor = 6;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
                   contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
-{DOUBLETYPE} { /*Verifica daca este o variabila definita ca si Double care este initializata la o valoare*/ 
+{DOUBLETYPE} { /*Verifica daca se intializeaza o variabila ca si un Double*/ 
             int contor = 7;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
                   contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}		
-{BOOLEANTYPE} {/*Verifica daca este o variabila definita ca si Boolean care este initializata la o valoare*/ 
+{BOOLEANTYPE} {/*Verifica daca se intializeaza o variabila ca si un Boolean*/ 
             int contor = 8;
             while (contor < strlen(yytext)) {
                   printf("%c", yytext[contor]);
@@ -204,7 +204,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
 			return PRIMITIVE_DATA_TYPE;}			
 	
-{STRINGVALUE}\( {/*Verifica daca este o metoda care va intoarce un String */ 
+{STRINGVALUE}\( {/*Verifica daca aceasta metoda va intoarce un String*/ 
             int contor = 7;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -213,7 +213,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
               }
 			
 			return PRIMITIVE_DATA_TYPE;}
-{INTEGERVALUE}\( {/*Verifica daca este o metoda care va intoarce un Integer */  
+{INTEGERVALUE}\( {/*Verifica daca aceasta metoda va intoarce un Integer */  
             int contor = 8;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -221,7 +221,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
-{FLOATVALUE}\( { /*Verifica daca este o metoda care va intoarce un Float */   
+{FLOATVALUE}\( { /*Verifica daca aceasta metoda va intoarce un Float */   
             int contor = 6;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -229,7 +229,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}
-{DOUBLEVALUE}\( {/*Verifica daca este o metoda care va intoarce un Double */   
+{DOUBLEVALUE}\( {/*Verifica daca aceasta metoda va intoarce un Double */   
             int contor = 7;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -237,7 +237,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   contor++;
               }
 			return PRIMITIVE_DATA_TYPE;}		
-{BOOLEANVALUE}\( {/*Verifica daca este o metoda care va intoarce un Boolean */  
+{BOOLEANVALUE}\( {/*Verifica daca aceasta metoda va intoarce un Boolean */  
             int contor = 8;
 			printf("def ");
             while (contor < strlen(yytext)) {
@@ -248,38 +248,36 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 
 "="|","|"{"|"}"|"("|")"|"["|"]"|"*"|"+"|"-"|"/"|"?"|":"|"&"|"|"|"^"|"!"|"~"|"%"|"<"|">" {return yytext[0];}
 
-[0-9]+ {	/*Cand se face match pe un numar natural, valoarea acestuia este scrisa in fisierul de iesire asa cum este intalnita si in fisierul de intrare si se returneaza si un token corespunzator*/
+[0-9]+ {	/*Verificare numar natural*/
             printf("%s", yytext);
-			return VALOARE;}
+			return VALUE;}
 
-[0-9]+"."+[0-9]+ {/*Cand se face match pe un numar flotant, valoarea acestuia este scrisa in fisierul de iesire asa cum este intalnita si in fisierul de intrare si se returneaza si un token corespunzator*/
-                    return VALOARE_FLOTANTA;}
+[0-9]+"."+[0-9]+ {/*Verificare numar flotant*/
+                    return FLOTANT_VALUE;}
 
-{IF}\) {/*Cand se face match cu regex-ul pentru inceperea structurii alternative if-else se scrie in fisierul de iesire conditia si se returneaza token-ul corespunztor*/	
+{IF}\) {/*Verificare pentru sturctura if*/	
         printf("%s:", yytext);
-		return DACA;}
+		return IF;}
 
-{MAIN} {/*Cand se face match cu regex-ul pentru definirea metodei principale a programului(main), se va returna token-ul corespunzator*/
-            return FUNCTIE_PRINCIPALA;}
-
-{MAINTHROWS} {  /*Vefica daca este metoda main si face throw la o exceptie sau mai multe*/
-                return FUNCTIE_PRINCIPALA;}
-
-
-{THROWS} {  /*Verfica daca se face throw unei exceptii in signaura metodei apelate*/
-            return EXCEPTIE;}
+{MAIN} {/*Verificare functie main*/
+            return MAIN;}
 
 
 
-{PRINT} { /*Cand se face match cu regex-ul de printare corespunzatror modului de apelare a metodei corespunzatoare din limbajul java, se va scrie in fisierul de iesire numele metodei corespunzatoare din Python (print)
-  urmat de aceeasi parametrii pe care ii primeste si metoda din limbajul Java*/
+
+{THROWS} {  /*Se verifica dac ase arunca o exceptie*/
+            return EXCEPTION;}
+
+
+
+{PRINT} { /*Se verifica daca se va face printarea in cod a unei variabile sa a unui text*/
             printf("print(");
 		  int contor = 17;
 			while(contor < strlen(yytext)) {
 				printf("%c", yytext[contor]);
                 contor++;
 			}
-			return AFISARE;
+			return PRINT;
 		}
 
 {WHILE} {	/*Verifica daca este o instructiune de tip while*/
@@ -294,13 +292,13 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
 				contor++;
 			}
 			contor++;
-			return CAT_TIMP;
+			return WHILE;
 		}
 
 
-"else" { /*Verifica daca am ajuns pe ramura de else*/ 
+"else" { /*Verifica daca am ajuns pe ramura de else a blocului if*/ 
          printf("%s:", yytext);
-		 return ALTFEL;}
+		 return ELSE;}
 
 {FOR} { /*Verifica daca este o intructiune for*/
 		printf("for ");
@@ -329,24 +327,11 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
             contor++;
 		}
 		printf(")");
-		return PENTRU;}
+		return FOR;}
 
 "returneaza" {return RETURNEAZA;}
 ";" {return EOL;}
 
-{CONSTRUCT} {   /*Verifica daca este un constructor fara parametrii*/
-				if (yytext[0] != 'c' && yytext[0] >= 'A' && yytext[0] <= 'Z') {
-					printf("def __init__(self");
-					return CONSTRUCTOR;
-				} 
-			}
-
-{CONSTRUCT2} { /*Verifica daca este un constructor cu parametrii*/
-				if (yytext[0] != 'c' && yytext[0] >= 'A' && yytext[0] <= 'Z') {
-					printf("def __init__(self, ");
-					return CONSTRUCTOR2;
-				} 
-			}
 
 {FUNCWITOUTPARAM}\; {  /*Verifica daca se invoca o metoda fara parametrii de catre o instanta*/
 			int contor = 0;
@@ -355,7 +340,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   contor++;
               }
 			
-			return FUNCTIE;		
+			return FUNCTION;		
 		}
 
 {FUNCWITHPARAM}\; { /*Verifica daca se invoca o metoda cu parametrii de catre o instanta*/
@@ -364,7 +349,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   printf("%c", yytext[contor]);
                   contor++;
               }
-			return FUNCTIE;
+			return FUNCTION;
 		}
 
 {STATICFUNCWITHOUTPARAM}\; { /*Verifica daca se invoca o metoda statica fara parametrii*/
@@ -373,7 +358,7 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   printf("%c", yytext[contor]);
                   contor++;
               }
-			return FUNCTIE;		
+			return FUNCTION;		
 		}
 
 {STATICFUNCWITHPARAM}\; { /*Verifica daca se invoca o metoda statica cu parametrii*/
@@ -382,14 +367,14 @@ PRINT "System.out.print("[ .()A-Za-z" 0-9+-=]+")"
                   printf("%c", yytext[contor]);
                   contor++;
               }
-			return FUNCTIE;
+			return FUNCTION;
 		}
 
 "\n" {}
 
 %%
 /*Aceasta functie verifica daca exista doua cuvinte inainte si dupa egal*/
-int checkTwoWords(char *s){
+int checkSpace(char *s){
     int contor = 0;
     int word = 0;
     while (s[contor] == ' ')

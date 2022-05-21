@@ -51,53 +51,45 @@ extern int yydebug;
   {
     USING = 258,
     PRIMITIVE_DATA_TYPE = 259,
-    VALOARE = 260,
-    VALOARE_FLOTANTA = 261,
-    DACA = 262,
-    ALTFEL = 263,
-    PENTRU = 264,
-    CAT_TIMP = 265,
+    VALUE = 260,
+    FLOTANT_VALUE = 261,
+    IF = 262,
+    ELSE = 263,
+    FOR = 264,
+    WHILE = 265,
     RETURNEAZA = 266,
-    FUNCTIE_PRINCIPALA = 267,
+    MAIN = 267,
     EOL = 268,
-    COMPARATORI = 269,
-    NAMESPACE = 270,
-    CLASA = 271,
-    CONSTRUCTOR = 272,
-    CONSTRUCTOR2 = 273,
-    EXCEPTIE = 274,
-    AFISARE = 275,
-    ASIGNARE = 276,
-    FUNCTIE = 277,
-    FUNCTIE2 = 278,
-    ASIG = 279,
-    RETURNT = 280
+    NAMESPACE = 269,
+    CLASS = 270,
+    EXCEPTION = 271,
+    PRINT = 272,
+    ASIGNARE = 273,
+    FUNCTION = 274,
+    ASSIGN = 275,
+    RETURNT = 276
   };
 #endif
 /* Tokens.  */
 #define USING 258
 #define PRIMITIVE_DATA_TYPE 259
-#define VALOARE 260
-#define VALOARE_FLOTANTA 261
-#define DACA 262
-#define ALTFEL 263
-#define PENTRU 264
-#define CAT_TIMP 265
+#define VALUE 260
+#define FLOTANT_VALUE 261
+#define IF 262
+#define ELSE 263
+#define FOR 264
+#define WHILE 265
 #define RETURNEAZA 266
-#define FUNCTIE_PRINCIPALA 267
+#define MAIN 267
 #define EOL 268
-#define COMPARATORI 269
-#define NAMESPACE 270
-#define CLASA 271
-#define CONSTRUCTOR 272
-#define CONSTRUCTOR2 273
-#define EXCEPTIE 274
-#define AFISARE 275
-#define ASIGNARE 276
-#define FUNCTIE 277
-#define FUNCTIE2 278
-#define ASIG 279
-#define RETURNT 280
+#define NAMESPACE 269
+#define CLASS 270
+#define EXCEPTION 271
+#define PRINT 272
+#define ASIGNARE 273
+#define FUNCTION 274
+#define ASSIGN 275
+#define RETURNT 276
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

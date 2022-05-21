@@ -41,7 +41,7 @@ public class MainClass {
         }
     }
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args){
         Float x = 45;
         Float y = 56;
         System.out.print("minimul este: " + getAvg(x, y));
